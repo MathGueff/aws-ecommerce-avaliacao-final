@@ -3,15 +3,29 @@
   "version": "0.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "tsc",
+    "test": "ts-node scratch/test-execucao.ts",
+    "build:lambda-execucao": "esbuild lambdas/1_lambda-execucao/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/1_lambda-execucao/index.js && powershell -Command \"Compress-Archive -Path dist/1_lambda-execucao/index.js -DestinationPath dist/1_lambda-execucao/index.zip -Force\""
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.939.0",
     "@aws-sdk/client-s3": "^3.939.0",
+    "@aws-sdk/client-ses": "^3.939.0",
     "@aws-sdk/lib-dynamodb": "^3.939.0",
+    "@aws-sdk/util-dynamodb": "^3.939.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "multer": "^2.0.2",
+    "nodemailer": "^6.9.13",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.137",
+    "@types/node": "^20.12.7",
+    "@types/nodemailer": "^6.4.14",
+    "esbuild": "^0.20.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }
