@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { handler, docClient } from "../lambdas/3_lamdba-preparacao/index";
+import { handler, docClient } from "../lambdas/3_lambda-preparacao/index";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 async function runTests() {

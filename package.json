@@ -5,14 +5,16 @@
   "scripts": {
     "start": "node server.js",
     "build": "tsc",
-    "test:execucao": "ts-node scratch/test-execucao.ts",
-    "test:envio": "ts-node scratch/test-envio.ts",
-    "test:preparacao": "ts-node scratch/test-preparacao.ts",
-    "test:confirmacao": "ts-node scratch/test-confirmacao.ts",
-    "build:lambda-execucao": "esbuild lambdas/1_lambda-execucao/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/1_lambda-execucao/index.js && powershell -Command \"Compress-Archive -Path dist/1_lambda-execucao/index.js -DestinationPath dist/1_lambda-execucao/index.zip -Force\"",
-    "build:lambda-envio": "esbuild lambdas/2_lambda-envio/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/2_lambda-envio/index.js && powershell -Command \"Compress-Archive -Path dist/2_lambda-envio/index.zip -Force\"",
-    "build:lambda-preparacao": "esbuild lambdas/3_lamdba-preparacao/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/3_lamdba-preparacao/index.js && powershell -Command \"Compress-Archive -Path dist/3_lamdba-preparacao/index.js -DestinationPath dist/3_lamdba-preparacao/index.zip -Force\"",
-    "build:lambda-confirmacao": "esbuild lambdas/5_lambda-confirmacao/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/5_lambda-confirmacao/index.js && powershell -Command \"Compress-Archive -Path dist/5_lambda-confirmacao/index.js -DestinationPath dist/5_lambda-confirmacao/index.zip -Force\""
+    "test:notificacao": "ts-node scratch/1_test-notificacao.ts",
+    "test:envio": "ts-node scratch/2_test-envio.ts",
+    "test:preparacao": "ts-node scratch/3_test-preparacao.ts",
+    "test:confirmacao": "ts-node scratch/4_test-confirmacao.ts",
+    "test:all": "npm run test:notificacao && npm run test:envio && npm run test:preparacao && npm run test:confirmacao",
+    "build:lambda-notificacao": "esbuild lambdas/1_lambda-notificacao/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/1_lambda-notificacao/index.js && powershell -Command \"Compress-Archive -Path dist/1_lambda-notificacao/index.js -DestinationPath dist/1_lambda-notificacao/index.zip -Force\"",
+    "build:lambda-envio": "esbuild lambdas/2_lambda-envio/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/2_lambda-envio/index.js && powershell -Command \"Compress-Archive -Path dist/2_lambda-envio/index.js -DestinationPath dist/2_lambda-envio/index.zip -Force\"",
+    "build:lambda-preparacao": "esbuild lambdas/3_lambda-preparacao/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/3_lambda-preparacao/index.js && powershell -Command \"Compress-Archive -Path dist/3_lambda-preparacao/index.js -DestinationPath dist/3_lambda-preparacao/index.zip -Force\"",
+    "build:lambda-confirmacao": "esbuild lambdas/4_lambda-confirmacao/index.ts --bundle --minify --platform=node --target=node20 --outfile=dist/4_lambda-confirmacao/index.js && powershell -Command \"Compress-Archive -Path dist/4_lambda-confirmacao/index.js -DestinationPath dist/4_lambda-confirmacao/index.zip -Force\"",
+    "build:all": "npm run build:lambda-notificacao && npm run build:lambda-envio && npm run build:lambda-preparacao && npm run build:lambda-confirmacao" 
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.939.0",

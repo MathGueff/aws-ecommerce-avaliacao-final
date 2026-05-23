@@ -1,9 +1,9 @@
 import * as nodemailer from "nodemailer";
-import { handler } from "../lambdas/1_lambda-execucao/index";
+import { handler } from "../lambdas/1_lambda-notificacao/index";
 import { DynamoDBStreamEvent } from "aws-lambda";
 
 async function runTests() {
-  console.log("=== INICIANDO SIMULAÇÃO LOCAL DA LAMBDA-EXECUÇÃO ===");
+  console.log("=== INICIANDO SIMULAÇÃO LOCAL DA LAMBDA-NOTIFICAÇÃO ===");
 
   try {
     // 1. Cria uma conta de teste SMTP temporária no Ethereal Email para visualização real do e-mail!

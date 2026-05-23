@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { handler, docClient, s3Client } from "../lambdas/5_lambda-confirmacao/index";
+import { handler, docClient, s3Client } from "../lambdas/4_lambda-confirmacao/index";
 import { S3Event } from "aws-lambda";
 
 async function runTests() {
