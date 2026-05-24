@@ -36,6 +36,23 @@ const BUCKET_NAME = process.env.S3_BUCKET_NAME;
 
 app.use(express.json());
 
+const neededEnvVars = [
+  'DYNAMODB_TABLE_NAME',
+  'S3_BUCKET_NAME',
+  'API_URL',
+  'PORT',
+  'AWS_REGION',
+  'AWS_ACCESS_KEY_ID',
+  'AWS_SECRET_ACCESS_KEY',
+  'AWS_SESSION_TOKEN'
+];
+
+if (
+  !neededEnvVars.every(varName => process.env[varName] !== undefined)
+) {
+  throw new Error('Variáveis de ambiente não carregadas. Verifique o arquivo .env', { envVarsMissing: neededEnvVars.filter(varName => process.env[varName] === undefined) });
+}
+
 // Swagger Documentation
 const swaggerDocument = {
   openapi: '3.0.0',
@@ -46,7 +63,7 @@ const swaggerDocument = {
   },
   servers: [
     {
-      url: `http://localhost:${process.env.PORT || 3000}`,
+      url: `http://${process.env.API_URL}:${process.env.PORT || 3000}`,
       description: 'Servidor de desenvolvimento'
     }
   ],
