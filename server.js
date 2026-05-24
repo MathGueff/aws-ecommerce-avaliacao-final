@@ -44,13 +44,19 @@ const neededEnvVars = [
   'AWS_REGION',
   'AWS_ACCESS_KEY_ID',
   'AWS_SECRET_ACCESS_KEY',
-  'AWS_SESSION_TOKEN'
+  'AWS_SESSION_TOKEN',
+  'test'
 ];
 
 if (
   !neededEnvVars.every(varName => process.env[varName] !== undefined)
 ) {
-  console.error('Variáveis de ambiente não carregadas. Verifique o arquivo .env', { envVarsMissing: neededEnvVars.filter(varName => process.env[varName] === undefined) });
+  console.error('Variáveis de ambiente não carregadas. Verifique o arquivo .env', { 
+    envVarsMissing: neededEnvVars.filter(varName => process.env[varName] === undefined),
+    envVarsLoaded: neededEnvVars.filter(varName => process.env[varName] !== undefined),
+    dateNow: new Date()
+  });
+  throw new Error('Verifique se o arquivo .env está presente e contém as variáveis necessárias');
 }
 
 // Swagger Documentation
