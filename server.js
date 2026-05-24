@@ -431,6 +431,14 @@ app.post('/pedidos/:idPedido/upload', upload.single('file'), async (req, res) =>
       return res.status(404).json({ error: 'Pedido não encontrado' });
     }
 
+    // Valida se o status do pedido é PREPARACAO
+    const statusPedido = Item.status ?? Item.Status;
+    if (statusPedido !== 'PREPARACAO') {
+      return res.status(400).json({
+        error: `Upload não permitido. O pedido deve estar no status PREPARACAO. Status atual: ${statusPedido}`
+      });
+    }
+
     // Upload do arquivo no S3 na raiz do bucket
     // Formato: timestamp-nome_original.ext
     const fileKey = `${Date.now()}-${req.file.originalname}`;
