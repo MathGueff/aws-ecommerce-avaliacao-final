@@ -634,10 +634,11 @@ app.get('/pedidos/:idPedido/arquivos', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+const URL = process.env.API_URL || 'http://localhost';
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
-  console.log(`Documentação Swagger disponível em http://localhost:${PORT}/swagger`);
+  console.log(`Documentação Swagger disponível em ${URL}:${PORT}/swagger`);
 });
 
 module.exports = app;
