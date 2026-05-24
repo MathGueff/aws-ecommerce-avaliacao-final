@@ -88,7 +88,6 @@ const swaggerDocument = {
                   emailCliente: { type: 'string', example: 'cliente@email.com' },
                   nomeCliente: { type: 'string', example: 'João Silva' },
                   valor: { type: 'number', example: 150.50 },
-                  status: { type: 'string', enum: ['RECEBIDO', 'PREPARACAO', 'ENVIADO'], example: 'RECEBIDO' },
                   referenciaNota: { type: 'string', example: 'NF-12345' },
                   dataEnvio: { type: 'string', format: 'date-time', example: '2025-01-15T10:30:00Z' }
                 }
@@ -388,7 +387,7 @@ app.post('/pedidos', async (req, res) => {
       nomeCliente,
       valor: parseFloat(valor),
       data: new Date().toISOString(),
-      status,
+      status: 'RECEBIDO', // Sempre inicializado como 'RECEBIDO' conforme regras de negócio
       referenciaNota: referenciaNota || null,
       dataEnvio: dataEnvio || null
     };
