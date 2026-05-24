@@ -36,7 +36,7 @@ async function runTests() {
     return {
       Attributes: {
         idPedido: command.input.Key.idPedido,
-        Status: "ENVIADO",
+        status: "ENVIADO",
         dataEnvio: command.input.ExpressionAttributeValues[":dataEnvio"],
         referenciaNota: command.input.ExpressionAttributeValues[":referenciaNota"]
       }

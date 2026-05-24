@@ -113,7 +113,7 @@ export const handler = async (event: S3Event): Promise<void> => {
         // Atualiza Status para 'ENVIADO', DataEnvio para a data atual e atrela a chave do S3 na ReferenciaNota
         UpdateExpression: "SET #status = :novoStatus, dataEnvio = :dataEnvio, referenciaNota = :referenciaNota",
         ExpressionAttributeNames: {
-          "#status": "Status", // Contorna palavra reservada
+          "#status": "status", // Contorna palavra reservada
         },
         ExpressionAttributeValues: {
           ":novoStatus": "ENVIADO",

@@ -30,7 +30,7 @@ async function runTests() {
         nomeCliente: "Juliana Santos",
         valor: 450.90,
         data: new Date().toISOString(),
-        Status: "PREPARACAO" // Status alterado para PREPARACAO
+        status: "PREPARACAO" // Status alterado para PREPARACAO
       }
     };
   };
@@ -52,7 +52,7 @@ async function runTests() {
   if (
     resSucesso.statusCode === 200 &&
     resSucesso.headers["Access-Control-Allow-Origin"] === "*" &&
-    bodySucesso.pedido.Status === "PREPARACAO"
+    (bodySucesso.pedido.status === "PREPARACAO" || bodySucesso.pedido.Status === "PREPARACAO")
   ) {
     console.log("✅ Cenário 1 Passou! Pedido atualizado com sucesso e CORS habilitado.");
   } else {

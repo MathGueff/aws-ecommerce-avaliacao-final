@@ -40,12 +40,12 @@ async function runTests() {
           {
             idPedido: "ped-recente-1",
             data: umMinutoAtras,
-            Status: "RECEBIMENTO"
+            status: "RECEBIMENTO"
           },
           {
             IdPedido: "ped-parado-2", // Testa compatibilidade de PascalCase
             Data: seisMinutosAtras,   // Testa compatibilidade de PascalCase
-            Status: "RECEBIMENTO"
+            status: "RECEBIMENTO"
           },
           {
             idPedido: "ped-parado-3",

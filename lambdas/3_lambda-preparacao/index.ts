@@ -85,10 +85,9 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       Key: {
         idPedido: idPedido,
       },
-      // Status é palavra reservada no DynamoDB, então usamos ExpressionAttributeNames (#status)
       UpdateExpression: "SET #status = :novoStatus",
       ExpressionAttributeNames: {
-        "#status": "Status",
+        "#status": "status",
       },
       ExpressionAttributeValues: {
         ":novoStatus": "PREPARACAO",

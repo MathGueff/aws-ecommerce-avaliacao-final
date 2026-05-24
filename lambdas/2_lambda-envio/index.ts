@@ -36,6 +36,23 @@ function extrairDadosPedido(item: Record<string, any>): PedidoSimplificado | nul
  * Handler principal da AWS Lambda triggered por EventBridge Schedule (a cada 5 minutos).
  */
 export const handler = async (): Promise<void> => {
+  const neededEnvVars = [
+    'DYNAMODB_TABLE_NAME',
+    'AWS_REGION',
+    'WEBHOOK_URL'
+  ];
+
+  if (
+    !neededEnvVars.every(varName => process.env[varName] !== undefined)
+  ) {
+    console.error('Variáveis de ambiente não carregadas. Verifique o arquivo .env', { 
+      envVarsMissing: neededEnvVars.filter(varName => process.env[varName] === undefined),
+      envVarsLoaded: neededEnvVars.filter(varName => process.env[varName] !== undefined),
+      dateNow: new Date()
+    });
+    throw new Error('Verifique se o arquivo .env está presente e contém as variáveis necessárias');
+  }
+
   console.info(
     JSON.stringify({
       message: "Iniciando varredura periódica de pedidos parados",
@@ -52,12 +69,12 @@ export const handler = async (): Promise<void> => {
   try {
     // 1. Executa a varredura (Scan) paginada no DynamoDB
     do {
-      // Como "Status" é uma palavra reservada no DynamoDB, precisamos usar ExpressionAttributeNames (#status)
       const scanCommand = new ScanCommand({
         TableName: TABLE_NAME,
-        FilterExpression: "#status = :statusRecebido OR #status = :statusRecebimento",
+        FilterExpression: "(#status = :statusRecebido OR #status = :statusRecebimento) OR (#statusUpper = :statusRecebido OR #statusUpper = :statusRecebimento)",
         ExpressionAttributeNames: {
-          "#status": "Status",
+          "#status": "status",
+          "#statusUpper": "Status",
         },
         ExpressionAttributeValues: {
           ":statusRecebido": "RECEBIDO",
