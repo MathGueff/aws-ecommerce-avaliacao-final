@@ -138,6 +138,32 @@ const swaggerDocument = {
         }
       }
     },
+    '/pedidos/criarMocks': {
+      post: {
+        summary: 'Criar 5 pedidos mockados de teste',
+        tags: ['Pedidos'],
+        responses: {
+          201: {
+            description: 'Mocks criados com sucesso',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    message: { type: 'string' },
+                    criados: {
+                      type: 'array',
+                      items: { $ref: '#/components/schemas/Pedido' }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          500: { description: 'Erro ao criar mocks' }
+        }
+      }
+    },
     '/pedidos/{id}': {
       get: {
         summary: 'Consultar pedido específico',
@@ -406,6 +432,47 @@ app.post('/pedidos', async (req, res) => {
   } catch (error) {
     console.error('Erro ao criar pedido:', error);
     res.status(500).json({ error: 'Erro ao criar pedido', details: error.message });
+  }
+});
+
+// POST - Criar 5 pedidos mockados chamando o endpoint de cadastro '/pedidos'
+app.post('/pedidos/criarMocks', async (req, res) => {
+  try {
+    const mocks = [
+      { nomeCliente: 'João Silva', emailCliente: 'joao.silva@email.com', valor: 150.50 },
+      { nomeCliente: 'Maria Oliveira', emailCliente: 'maria.oliveira@email.com', valor: 230.00 },
+      { nomeCliente: 'Pedro Santos', emailCliente: 'pedro.santos@email.com', valor: 89.90 },
+      { nomeCliente: 'Ana Souza', emailCliente: 'ana.souza@email.com', valor: 420.00 },
+      { nomeCliente: 'Lucas Lima', emailCliente: 'lucas.lima@email.com', valor: 310.20 }
+    ];
+
+    const criados = [];
+    const PORT_USED = process.env.PORT || 3000;
+
+    for (const mock of mocks) {
+      const response = await fetch(`http://localhost:${PORT_USED}/pedidos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(mock)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Falha ao cadastrar mock para ${mock.nomeCliente}: Status ${response.status}`);
+      }
+
+      const data = await response.json();
+      criados.push(data.pedido);
+    }
+
+    res.status(201).json({
+      message: '5 pedidos mockados cadastrados com sucesso',
+      criados
+    });
+  } catch (error) {
+    console.error('Erro ao cadastrar mocks:', error);
+    res.status(500).json({ error: 'Erro ao cadastrar mocks', details: error.message });
   }
 });
 
