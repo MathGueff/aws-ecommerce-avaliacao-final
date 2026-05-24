@@ -50,7 +50,7 @@ const neededEnvVars = [
 if (
   !neededEnvVars.every(varName => process.env[varName] !== undefined)
 ) {
-  throw new Error('Variáveis de ambiente não carregadas. Verifique o arquivo .env', { envVarsMissing: neededEnvVars.filter(varName => process.env[varName] === undefined) });
+  console.error('Variáveis de ambiente não carregadas. Verifique o arquivo .env', { envVarsMissing: neededEnvVars.filter(varName => process.env[varName] === undefined) });
 }
 
 // Swagger Documentation
