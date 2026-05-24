@@ -88,22 +88,23 @@ export function construirTemplateEmail(
   let subject = "";
   let body = "";
 
+  const defaultHeader = `Prezado(a) ${nome}, agradecemos pela sua compra!`
   switch (statusNormalizado) {
     case "RECEBIMENTO":
       subject = `Pedido ${pedido.idPedido} Recebido com Sucesso!`;
-      body = `Prezado(a) ${nome}, agradecemos pela sua compra! O seu pedido foi recebido e será enviado em breve! Dados: Valor total: ${valorFormatado}, Data da compra: ${dataFormatada}`;
+      body = `${defaultHeader}\n\nO seu pedido foi recebido e será enviado em breve!\n\nDados do pedido:\nValor total: ${valorFormatado}\nData da compra: ${dataFormatada}`;
       break;
 
     case "PREPARACAO":
       subject = `Seu Pedido ${pedido.idPedido} está em Preparação!`;
-      body = `Prezado(a) ${nome}... O seu pedido está na etapa de preparação e será enviado em breve! Dados: Valor total: ${valorFormatado}, Data: ${dataFormatada}`;
+      body = `${defaultHeader}\n\nO seu pedido está na etapa de preparação e será enviado em breve!\n\nDados do pedido:\nValor total: ${valorFormatado}\nData da compra: ${dataFormatada}`;
       break;
 
     case "ENVIADO": {
       const dataEnvioFormatada = formatarData(pedido.dataEnvio);
       const notaFiscal = pedido.referenciaNota || "Nota Fiscal indisponível";
       subject = `Seu Pedido ${pedido.idPedido} foi Enviado!`;
-      body = `Prezado(a) ${nome}... Passando para avisar que o seu pedido já foi enviado... Dados do pedido: Valor total: ${valorFormatado}, Data da compra: ${dataFormatada}. Dados do envio: Data do envio: ${dataEnvioFormatada}, Link da nota fiscal: ${notaFiscal}`;
+      body = `${defaultHeader}\n\nPassando para avisar que o seu pedido já foi enviado e a data de recebimento é de 7 dias úteis.\n\nDados do pedido:\nValor total: ${valorFormatado}\nData da compra: ${dataFormatada}\n\nDados do envio:\nData do envio: ${dataEnvioFormatada}\nLink da nota fiscal: ${notaFiscal}`;
       break;
     }
   }
